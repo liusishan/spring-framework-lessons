@@ -51,18 +51,19 @@ public class DependencyInjectionDemo {
      * @param applicationContext
      */
     private static void whoIsIoCContainer(UserRepository userRepository, ApplicationContext applicationContext) {
+        /**
+         * ConfigurableApplicationContext <- ApplicationContext <- BeanFactory
+         * ConfigurableApplicationContext#getBeanFactory
+         * ApplicationContext is BeanFactory
+         *
+         * ApplicationContext 和 BeanFactory 其实是一类事物，
+         * 不过是底层实现上面 ApplicationContext 组合了一个 BeanFactory 的实现，为什么不相等，因为它们两个毕竟是两个对象，
+         * 它们两个都复用了 BeanFactory。BeanFactory 是一个底层的 IoC 容器 ApplicationContext 在它基础上增加了一下特性(更容易与 Spring 的AOP集成、国际化的支持、事件的发布等)
+         * ApplicationContext 是 BeanFactory 的一个子接口, 是 BeanFactory 的一个超集。
+         *
+         */
         // 这个表达式为什么不会成立
         System.out.println(userRepository.getBeanFactory() == applicationContext);
-
-//        ConfigurableApplicationContext <- ApplicationContext <- BeanFactory
-        // ConfigurableApplicationContext#getBeanFactory
-        // ApplicationContext is BeanFactory
-
-        // ApplicationContext 和 BeanFactory 其实是一类事物，
-        // 不过是底层实现上面 ApplicationContext 组合了一个 BeanFactory 的实现，为什么不相等，因为它们两个毕竟是两个对象，
-        // 它们两个都复用了 BeanFactory。
-        // BeanFactory 是一个底层的 IoC 容器 ApplicationContext 在它基础上增加了一下特性(更容易与 Spring 的AOP集成、国际化的支持、事件的发布等)
-        // ApplicationContext 是 BeanFactory 的一个子接口, 是 BeanFactory 的一个超集。
     }
 
 
